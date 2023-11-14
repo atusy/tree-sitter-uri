@@ -4,8 +4,10 @@ module.exports = grammar({
   rules: {
     source_file: $ => repeat(seq($._definition, '\n')),
     _definition: $ => choice(
+      // $._ignore,
       $.uri
     ),
+    // _ignore: $ => /;.*/,
     uri: $ => seq(
       $.scheme,
       ':',

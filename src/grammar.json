@@ -4,9 +4,35 @@
     "source_file": {
       "type": "REPEAT",
       "content": {
-        "type": "SYMBOL",
-        "name": "uri"
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_definition"
+          },
+          {
+            "type": "STRING",
+            "value": "\n"
+          }
+        ]
       }
+    },
+    "_definition": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_ignore"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "uri"
+        }
+      ]
+    },
+    "_ignore": {
+      "type": "PATTERN",
+      "value": ";.*"
     },
     "uri": {
       "type": "SEQ",
@@ -116,29 +142,37 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "PREC",
-              "value": 2,
-              "content": {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "host"
-                  },
-                  {
-                    "type": "STRING",
-                    "value": ":"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "port"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "PREC",
+                  "value": 2,
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "host"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": ":"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "port"
+                      }
+                    ]
                   }
-                ]
-              }
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "host"
+                }
+              ]
             },
             {
-              "type": "SYMBOL",
-              "name": "host"
+              "type": "BLANK"
             }
           ]
         }
@@ -153,8 +187,39 @@
       "value": "[^\\n@]+@"
     },
     "host": {
-      "type": "PATTERN",
-      "value": "[^\\n@:/]*"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[^\\n@:/]+"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[^\\n@/]+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[^\\n@/]*:"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "PATTERN",
+                  "value": "[^\\n@/:0-9][^\\n@/:]*"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "[0-9]+[^\\n@/:0-9][^\\n@/:]*"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     },
     "port": {
       "type": "PATTERN",
@@ -165,7 +230,7 @@
       "members": [
         {
           "type": "PATTERN",
-          "value": "[^\\n:]"
+          "value": "[^\\n]"
         },
         {
           "type": "PATTERN",
