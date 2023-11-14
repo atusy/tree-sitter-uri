@@ -40,7 +40,7 @@ module.exports = grammar({
       // TODO: should support ^:
     ),
     port: $ => /\d+/,
-    path: $ => seq(/[^\n]/, /([^\n?#]*)?/),
+    path: $ => seq(/[^\n?#]/, /([^\n?#]*)?/),
     query: $ => /[^\n#]*/,
     fragment: $ => /[^\n]*/,
   }
