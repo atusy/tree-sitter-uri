@@ -2,7 +2,10 @@ module.exports = grammar({
   name: 'uri',
 
   rules: {
-    source_file: $ => repeat($.uri),
+    source_file: $ => repeat(seq($._definition, '\n')),
+    _definition: $ => choice(
+      $.uri
+    ),
     uri: $ => seq(
       $.scheme,
       ':',
@@ -17,10 +20,10 @@ module.exports = grammar({
     authority: $ => seq(
       '//',
       optional($.userinfo),
-      choice(
+      optional(choice(
         prec(2, seq($.host, ':', $.port)),
         $.host,
-      ),
+      )),
     ),
     scheme: $ => /[a-zA-Z][a-zA-Z0-9+.-]*/,
     userinfo: $ => /[^\n@]+@/, // TODO: should separate @
@@ -29,8 +32,8 @@ module.exports = grammar({
       /[^\n@:/]+/, // no-colon
       // host not beginning with colon
       seq(/[^\n@:/]+/, /[^\n@/]*:/, choice(
-        seq(/[^\n@/:0-9][^\n@/:]*/), // : followed by non-numeric
-        seq(/[0-9]+[^\n@/:0-9][^\n@/:]*/), // : followed by non-numeric
+        /[^\n@/:0-9][^\n@/:]*/, // : followed by non-numeric
+        /[0-9]+[^\n@/:0-9][^\n@/:]*/, // : followed by non-numeric
       )),
       // TODO: should support ^:
     ),
