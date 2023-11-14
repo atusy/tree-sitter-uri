@@ -32,17 +32,31 @@
           "type": "CHOICE",
           "members": [
             {
+              "type": "PREC",
+              "value": 2,
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "authority"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "path"
+                  }
+                ]
+              }
+            },
+            {
               "type": "SYMBOL",
               "name": "authority"
             },
             {
-              "type": "BLANK"
+              "type": "SYMBOL",
+              "name": "path"
             }
           ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "path"
         },
         {
           "type": "CHOICE",
@@ -108,27 +122,32 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "host"
-        },
-        {
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": ":"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "port"
-                }
-              ]
+              "type": "PREC",
+              "value": 2,
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "host"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": ":"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "port"
+                  }
+                ]
+              }
             },
             {
-              "type": "BLANK"
+              "type": "SYMBOL",
+              "name": "host"
             }
           ]
         }
@@ -151,8 +170,17 @@
       "value": "\\d+"
     },
     "path": {
-      "type": "PATTERN",
-      "value": "\\/([^/][^\\n?#]*)?"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[^\\n:]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "([^\\n?#]*)?"
+        }
+      ]
     },
     "query": {
       "type": "PATTERN",

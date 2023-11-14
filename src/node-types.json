@@ -23,6 +23,11 @@
     }
   },
   {
+    "type": "path",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "source_file",
     "named": true,
     "fields": {},
@@ -90,10 +95,6 @@
   },
   {
     "type": "host",
-    "named": true
-  },
-  {
-    "type": "path",
     "named": true
   },
   {
