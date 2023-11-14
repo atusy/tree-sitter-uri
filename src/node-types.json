@@ -5,7 +5,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "host",
@@ -21,6 +21,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "host",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "path",
@@ -74,6 +79,10 @@
     }
   },
   {
+    "type": "\n",
+    "named": false
+  },
+  {
     "type": "#",
     "named": false
   },
@@ -91,10 +100,6 @@
   },
   {
     "type": "fragment",
-    "named": true
-  },
-  {
-    "type": "host",
     "named": true
   },
   {

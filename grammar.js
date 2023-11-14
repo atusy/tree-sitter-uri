@@ -2,7 +2,12 @@ module.exports = grammar({
   name: 'uri',
 
   rules: {
-    source_file: $ => repeat($.uri),
+    source_file: $ => repeat(seq($._definition, '\n')),
+    _definition: $ => choice(
+      // $._ignore,
+      $.uri
+    ),
+    // _ignore: $ => /;.*/,
     uri: $ => seq(
       $.scheme,
       ':',
@@ -17,16 +22,25 @@ module.exports = grammar({
     authority: $ => seq(
       '//',
       optional($.userinfo),
-      choice(
+      optional(choice(
         prec(2, seq($.host, ':', $.port)),
         $.host,
-      ),
+      )),
     ),
     scheme: $ => /[a-zA-Z][a-zA-Z0-9+.-]*/,
     userinfo: $ => /[^\n@]+@/, // TODO: should separate @
-    host: $ => /[^\n@:/]*/, // TODO: should support :
+    host: $ => choice(
+      // host without colon
+      /[^\n@:/]+/, // no-colon
+      // host not beginning with colon
+      seq(/[^\n@:/]+/, /[^\n@/]*:/, choice(
+        /[^\n@/:0-9][^\n@/:]*/, // : followed by non-numeric
+        /[0-9]+[^\n@/:0-9][^\n@/:]*/, // : followed by non-numeric
+      )),
+      // TODO: should support ^:
+    ),
     port: $ => /\d+/,
-    path: $ => seq(/[^\n:]/, /([^\n?#]*)?/), // TODO: should support ^:
+    path: $ => seq(/[^\n]/, /([^\n?#]*)?/),
     query: $ => /[^\n#]*/,
     fragment: $ => /[^\n]*/,
   }
