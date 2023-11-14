@@ -22,17 +22,9 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_ignore"
-        },
-        {
-          "type": "SYMBOL",
           "name": "uri"
         }
       ]
-    },
-    "_ignore": {
-      "type": "PATTERN",
-      "value": ";.*"
     },
     "uri": {
       "type": "SEQ",
@@ -198,7 +190,7 @@
           "members": [
             {
               "type": "PATTERN",
-              "value": "[^\\n@/]+"
+              "value": "[^\\n@:/]+"
             },
             {
               "type": "PATTERN",
