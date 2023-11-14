@@ -10,7 +10,7 @@ module.exports = grammar({
       $.scheme,
       ':',
       optional($.authority),
-      $.path,
+      optional($.path),
       optional(seq('?', $.query)),
       optional(seq('#', $.fragment)),
     ),
