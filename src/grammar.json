@@ -5,17 +5,8 @@
       "type": "REPEAT",
       "content": {
         "type": "SYMBOL",
-        "name": "_definition"
+        "name": "uri"
       }
-    },
-    "_definition": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "uri"
-        }
-      ]
     },
     "uri": {
       "type": "SEQ",

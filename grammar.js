@@ -2,10 +2,7 @@ module.exports = grammar({
   name: 'uri',
 
   rules: {
-    source_file: $ => repeat($._definition),
-    _definition: $ => choice(
-      $.uri
-    ),
+    source_file: $ => repeat($.uri),
     uri: $ => seq(
       $.scheme,
       ':',
