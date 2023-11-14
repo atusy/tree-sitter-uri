@@ -24,7 +24,16 @@ module.exports = grammar({
     ),
     scheme: $ => /[a-zA-Z][a-zA-Z0-9+.-]*/,
     userinfo: $ => /[^\n@]+@/, // TODO: should separate @
-    host: $ => /[^\n@:/]*/, // TODO: should support :
+    host: $ => choice(
+      // host without colon
+      /[^\n@:/]+/, // no-colon
+      // host not beginning with colon
+      seq(/[^\n@:/]+/, /[^\n@/]*:/, choice(
+        seq(/[^\n@/:0-9][^\n@/:]*/), // : followed by non-numeric
+        seq(/[0-9]+[^\n@/:0-9][^\n@/:]*/), // : followed by non-numeric
+      )),
+      // TODO: should support ^:
+    ),
     port: $ => /\d+/,
     path: $ => seq(/[^\n:]/, /([^\n?#]*)?/), // TODO: should support ^:
     query: $ => /[^\n#]*/,
