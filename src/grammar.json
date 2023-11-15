@@ -222,7 +222,11 @@
       "members": [
         {
           "type": "PATTERN",
-          "value": "[^\\n?#]{0,}"
+          "value": "[^\\n?#]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "([^\\n?#]*)?"
         }
       ]
     },
