@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "uri",
   "rules": {
     "source_file": {
@@ -217,18 +218,25 @@
       "type": "PATTERN",
       "value": "\\d+"
     },
+    "segment": {
+      "type": "PATTERN",
+      "value": "[^\\n/?#]+"
+    },
     "path": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "PATTERN",
-          "value": "[^\\n?#]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "([^\\n?#]*)?"
-        }
-      ]
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "/"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "segment"
+          }
+        ]
+      }
     },
     "query": {
       "type": "PATTERN",
@@ -249,6 +257,6 @@
   "precedences": [],
   "externals": [],
   "inline": [],
-  "supertypes": []
+  "supertypes": [],
+  "reserved": {}
 }
-

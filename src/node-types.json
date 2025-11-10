@@ -30,11 +30,22 @@
   {
     "type": "path",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "segment",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "source_file",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -87,6 +98,10 @@
     "named": false
   },
   {
+    "type": "/",
+    "named": false
+  },
+  {
     "type": "//",
     "named": false
   },
@@ -112,6 +127,10 @@
   },
   {
     "type": "scheme",
+    "named": true
+  },
+  {
+    "type": "segment",
     "named": true
   },
   {
